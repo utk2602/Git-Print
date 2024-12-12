@@ -1,21 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Receipt Base Styles */
+.font-receipt {
+  font-family: 'VT323', monospace;
+  -webkit-font-smoothing: antialiased;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+.receipt-title {
+  font-size: 2.5rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-shadow: 1.5px 1.5px 0 rgba(0, 0, 0, 0.15);
+}
+
+.bg-receipt {
+  background-color: #fcfcfc;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.receipt-texture {
+  position: relative;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(0, 0, 0, 0.02) 0px,
+    rgba(0, 0, 0, 0.02) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+
+/* Decorative Elements */
+.receipt-edge {
+  position: relative;
+}
+
+.receipt-edge::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 4px,
+    #fcfcfc 4px,
+    #fcfcfc 8px
+  );
+}
+
+/* Barcode Styling */
+.barcode-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 60px;
+  overflow: hidden;
+  padding: 0.5rem 0;
+}
+
+.barcode-line {
+  height: 100%;
+  width: 2px;
+  margin: 0 1px;
+  background-color: #000;
+  animation: scanEffect 2s infinite;
+}
+
+@keyframes scanEffect {
+  0% { opacity: 1; }
+  50% { opacity: 0.8; }
+  100% { opacity: 1; }
+}
+
+/* Print Optimization */
+@media print {
+  .bg-receipt {
+    background-color: white;
+    box-shadow: none;
+    border: none;
+  }
+  
+  .receipt-texture {
+    background-image: none;
+  }
+  
+  .receipt-edge::after {
+    display: none;
+  }
+  
+  .barcode-line {
+    animation: none;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
